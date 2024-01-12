@@ -1,0 +1,14 @@
+<section>
+    <h2>Add New Customer</h2>
+    <form [formGroup]="newCustomerForm" (submit)="createNewCustomer()">
+        <label for="firstNameInput">First Name:</label>
+        <input id="firstNameInput" formControlName="firstName" placeholder="first name">
+    
+        <label for="lastNameInput">Last Name:</label>
+        <input id="lastNameInput" formControlName="lastName" placeholder="last name">
+    
+        <label for="emailInput">Email:</label>
+        <input id="emailInput" formControlName="email" placeholder="first.last@workplace.com">
+        <button type="submit">Create</button>
+    </form>
+</section>

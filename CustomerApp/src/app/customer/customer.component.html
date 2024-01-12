@@ -1,0 +1,30 @@
+<tr (click)="onSelect()" class="{{isSelected ? 'selected': ''}}">
+  <td>{{customer.id}}</td>
+  <td>
+    <input 
+      placeholder="first name" 
+      disabled="{{!isSelected}}" 
+      value="{{customer.firstName}}"
+    >
+  </td>
+  <td>
+    <input 
+      placeholder="last name" 
+      disabled="{{!isSelected}}" 
+      value="{{customer.lastName}}"
+    >
+  </td>
+  <td>
+    <input 
+      placeholder="first.last@workplace.com" 
+      disabled="{{!isSelected}}" 
+      value="{{customer.email}}"
+    >
+  </td>
+  <td>{{customer.createdAt}}</td>
+  <td>{{customer.updatedAt}}</td>
+  <!-- Would prefer to use icons for edit and delete feature 
+    but for simplicity of challenge using the words -->
+  <button (click)="onSubmitEdit()">Save</button>
+  <button (click)="onClickDelete()">Delete</button>
+</tr>

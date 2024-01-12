@@ -1,0 +1,13 @@
+thead, tbody {
+    display: flex;
+    flex-direction: column;
+    max-height: 600px;
+    width: 100%;
+    overflow: scroll;
+}
+
+tr {
+    display: flex;
+    width: 95%;
+    justify-content: space-between;
+}
