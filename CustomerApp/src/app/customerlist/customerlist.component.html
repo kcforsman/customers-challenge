@@ -16,7 +16,8 @@
     *ngFor="let customer of customerList"
     [customer]="customer"
     [onSelectCustomer]="onSelectCustomer"
-    [selectedCustomerId]="selectedCustomerId"
+    [onEditCustomerSave]="onEditCustomerSave"
+    [onDeleteCustomer]="onDeleteCustomer"
     [isSelected]="selectedCustomerId == customer.id">
   </app-customer>
   </tbody>

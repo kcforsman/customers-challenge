@@ -1,8 +1,8 @@
-import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, Input, , inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CustomersService } from '../customers.service';
-import { Customer } from '../interfaces';
+import { Customer, UpdateCustomerFormInput } from '../interfaces';
 import { json } from 'stream/consumers';
 
 @Component({
@@ -13,32 +13,23 @@ import { json } from 'stream/consumers';
   styleUrl: './customer.component.css'
 })
 
-export class CustomerComponent implements OnChanges {
+export class CustomerComponent {
   customersService: CustomersService = inject(CustomersService);
-  @Input() selectedCustomerId!: number;
   @Input() isSelected!: boolean;
   @Input() customer!: Customer;
   @Input() onSelectCustomer!: (id: number) => void;
+  @Input() onEditCustomerSave!: (id: number, customerUpdate: UpdateCustomerFormInput<string>) => void;
+  @Input() onDeleteCustomer!: (id: number) => void;
 
   onSelect() {
     this.onSelectCustomer(this.customer.id);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-  }
-
-  async onSubmitEdit() {
-    
-    // const status = await this.customersService.updateCustomer(this.customer.id);
-    // if (status === 'ERROR') {
-    //   alert('Failed to Delete!')
-    // }
+  async onSubmitEdit(customerUpdate: UpdateCustomerFormInput<string>) {
+    await this.onEditCustomerSave(this.customer.id, customerUpdate);
   }
 
   async onClickDelete() {
-    const status = await this.customersService.deleteCustomer(this.customer.id);
-    if (status === 'ERROR') {
-      alert('Failed to Delete!')
-    }
+    await this.onDeleteCustomer(this.customer.id);
   }
 }

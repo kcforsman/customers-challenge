@@ -19,12 +19,16 @@ export class NewCustomerFormComponent {
     email: new FormControl('')
   });
 
-  createNewCustomer() {
-    this.customersService.createCustomer({
+  async createNewCustomer() {
+    const newCustomer = await this.customersService.createCustomer({
       firstName: this.newCustomerForm.value.firstName || '',
       lastName: this.newCustomerForm.value.lastName || '',
       email: this.newCustomerForm.value.email || '',
-    }).then(() => {})
-    alert(`Collected new Data: ${this.newCustomerForm.value.firstName}, ${this.newCustomerForm.value.lastName}, and ${this.newCustomerForm.value.email}`);
+    });
+    if (newCustomer) {
+      // let user know it succeeded
+    } else {
+      // let user know it failed
+    }
   }
 }

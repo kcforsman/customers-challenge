@@ -15,29 +15,40 @@ export class CustomersService {
   constructor() { }
 
   async getCustomers(): Promise<Customer[]> {
+    // An nice to have for this call would be pagination and filtering for future features
+    // Also for big data can help cut down the size of a payload as user needs it
     const data = await fetch(BASE_SERVICE_URL);
-    return await data.json() ?? [];
+    // Strong believer in strong lin
+    const customers: Customer[] = mapCustomersToClient(data);
+    return await customers;
   }
 
   async getCustomer(id: number): Promise<Customer> {
     const data = await fetch(`${BASE_SERVICE_URL}/${id}`);
-    return await data.json() ?? {};
+    const customer: Customer = mapCustomerToClient(data);
+
+    return await customer;
   }
 
-  async createCustomer(newInput: NewCustomerFormInput<string>): Promise<Customer> {
+  async createCustomer(newInput: NewCustomerFormInput<string>): Promise<Customer | null> {
     const data = await fetch(BASE_SERVICE_URL, {
         method: 'POST',
         body: JSON.stringify(newInput),
       }
     );
+    let newCustomer: Customer | null = null;
+    if (data.ok) {
+      newCustomer = mapCustomerToClient(data);
+    }
 
-    return await data.json();
+    return newCustomer;
   }
 
   async updateCustomer(id: number, updateInput: UpdateCustomerFormInput<string>): Promise<Status> {
+    const updateRequestBody: {} = mapCustomerToService(updateInput);
     const data = await fetch(`${BASE_SERVICE_URL}/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(updateInput),
+        body: JSON.stringify(updateRequestBody),
       }
     );
 
@@ -60,3 +71,4 @@ export class CustomersService {
 // map request responses to appropriate component type. 
 // Allows for one place to update when api contract changes
 // Also forces one to be intentional about what data we put into the components
+// For now add, helper functions that aren't defined elsewhere to represent
